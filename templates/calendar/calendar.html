@@ -1,0 +1,154 @@
+{% extends 'layout.html' %}
+{% block title %}Calendario{% endblock %}
+{% block subtitle %}Calendario{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-7">
+      <div id="calendar"></div>
+    </div>
+    <div class="col"></div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ModalCalendar" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Nuevo Evento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-body">
+          <form method="POST">
+            <div class="form-group">
+              <label for="inputNombre">Nombre del evento</label>
+              <input type="text" name="evento" class="form-control" id="evento" placeholder="Nombre del Evento">
+            </div>
+            <div class="form-group">
+              <label for="inputPaterno">Fecha inicio</label>
+              <input type="text" name="fecha_inicio" class="form-control" id="fecha_inicio" placeholder="Fecha Inicio">
+            </div>
+            <div class="form-group">
+              <label for="InputDentista">Dentista</label>
+              <select class="form-select" aria-label="Default select example" name="dentista">
+                {% for dentista in dentistas %}
+                <option value="{{ dentista.0 }}">{{ dentista.1 }} {{ dentista.2 }} {{ dentista.3 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="InputPaciente">Paciente</label>
+              <select class="form-select" aria-label="Default select example" name="paciente">
+                {% for paciente in pacientes %}
+                <option value="{{ paciente.0 }}">{{ paciente.1 }} {{ paciente.2 }} {{ paciente.3 }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-12" id="grupoRadio">
+              <input type="radio" name="color_evento" id="orange" value="#FF5722" checked>
+              <label for="orange" class="circu" style="background-color: #FF5722;"> </label>
+              <input type="radio" name="color_evento" id="amber" value="#FFC107">
+              <label for="amber" class="circu" style="background-color: #FFC107;"> </label>
+              <input type="radio" name="color_evento" id="lime" value="#8BC34A">
+              <label for="lime" class="circu" style="background-color: #8BC34A;"> </label>
+              <input type="radio" name="color_evento" id="teal" value="#009688">
+              <label for="teal" class="circu" style="background-color: #009688;"> </label>
+              <input type="radio" name="color_evento" id="blue" value="#2196F3">
+              <label for="blue" class="circu" style="background-color: #2196F3;"> </label>
+              <input type="radio" name="color_evento" id="indigo" value="#9c27b0">
+              <label for="indigo" class="circu" style="background-color: #9c27b0;"> </label>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function () {
+    let calendar = $("#calendar").fullCalendar({
+      editable: true,
+      header: {
+        left: "prev,next today",
+        center: "title",
+        right: "month,agendaWeek,agendaDay",
+      },
+      locale: "es",
+      defaultView: "month",
+      navLinks: true,
+      editable: true,
+      eventLimit: true,
+      selectable: true,
+      selectHelper: false,
+      select: function (start, end) {
+        $('#ModalCalendar').modal('show');
+        $('#fecha_inicio').val(moment(start).format('YYYY-MM-DD'));
+        //  $("input[name=fecha_inicio]").val(start.format('DD-MM-YYYY'));
+        var valorFechaFin = end.format("DD-MM-YYYY");
+        var F_final = moment(valorFechaFin, "DD-MM-YYYY").subtract(1, 'days').format('DD-MM-YYYY'); //Le resto 1 dia
+        $('input[name=fecha_fin').val(F_final);
+      },
+      events: [
+        {% for cita in citas %}
+          {
+        id: '{{ cita.0 }}',
+        title: '{{ cita.5 }}',
+        start: '{{ cita.2 }}',
+        color: '{{ cita.3 }}'
+      },
+      {% endfor %}
+      ],
+      // dayClick: function(date, jsEvent, view) {
+      //   // alert('Clicked on: ' + date.format());
+      //   // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+      //   // alert('Current view: ' + view.name);
+      //   // change the day's background color just for fun
+      //   $(this).css('background-color', 'red');
+      //   $("#ModalCalendar").modal('show');
+      //   $("input[name=fecha_inicio]").val(date.format('DD-MM-YYYY'));
+      // }
+    });
+  });
+
+  // document.addEventListener("DOMContentLoaded", function () {
+  //     var calendarEl = document.getElementById("calendar");
+  //     var calendar = new FullCalendar.Calendar(calendarEl, {
+  //     // dateClick: function(info) {
+  //     //     //en esta funcion se abrira el popup para registrar cita
+  //     //     alert('Date: ' + info.dateStr);
+  //     //     alert('Resource ID: ' + info.resource.id);
+  //     // },
+  //     select: function(start, end){
+  //         var exampleModal = document.querySelector("#exampleModal");
+  //         exampleModal.modal();
+
+  //       $("input[name=fecha_inicio]").val(start.format('DD-MM-YYYY'));
+  //       var valorFechaFin = end.format("DD-MM-YYYY");
+  //       var F_final = moment(valorFechaFin, "DD-MM-YYYY").subtract(1, 'days').format('DD-MM-YYYY'); //Le resto 1 dia
+  //       $('input[name=fecha_fin').val(F_final);
+  //     },
+  //     editable:true,
+  //     locale: "es",
+  //     header:{
+  //         left: 'prev,next today',
+  //         center:'title',
+  //         rigth:'month,agendaWeek,agendaDay'
+  //     },
+  //     events:[{title: 'Programando con python', start : '2022-06-05'},],
+  //     });
+  //     calendar.render();
+  //   });
+</script>
+
+{% endblock %}

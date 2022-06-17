@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block title %}Dentistas | Editar{% endblock %}
+{% block content %}
+<form method="POST">
+    <div class="mb-3">
+        <label for="InputName" class="form-label">Nombre</label>
+        <input type="text" class="form-control" value="{{ user.1 }}" id="InputName" name="nombre">
+    </div>
+    <div class="mb-3">
+        <label for="InputPaterno" class="form-label">Apellido paterno</label>
+        <input type="text" class="form-control" value="{{ user.2 }}" id="InputPaterno" name="paterno">
+    </div>
+    <div class="mb-3">
+        <label for="InputMaterno" class="form-label">Apellido materno</label>
+        <input type="text" class="form-control" value="{{ user.3 }}" id="InputMaterno" name="materno">
+    </div>
+    <div class="mb-3">
+        <label for="InputNacimiento" class="form-label">Fecha de nacimiento</label>
+        <input type="text" class="form-control" value="{{ user.4 }}" id="InputNacimiento" name="nacimiento">
+    </div>
+    <div class="mb-3">
+        <label for="InputSexo" class="form-label">Sexo</label>
+        <select class="form-select" aria-label="Default select example" name="sexo" value="{{ user.5 }}" id="InputSexo" name="sexo">
+            <option value="idk" selected>No especificar</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Hombre">Hombre</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="InputTelefono" class="form-label">Telefono</label>
+        <input type="tel" class="form-control" value="{{ user.6 }}" id="InputTelefono" name="telefono">
+    </div>
+    <div class="mb-3">
+        <label for="InputEmail" class="form-label">Email</label>
+        <input type="text" class="form-control" value="{{ user.7 }}" id="InputEmail" name="email">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>
+{% endblock %}

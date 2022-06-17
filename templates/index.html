@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Motivo</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Dentista</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cita in citas %}
+        <tr>
+            <td>{{ cita.1 }}</td>
+            <td>{{ cita.2 }}</td>
+            <td>{{ cita.5 }} {{ cita.6 }} {{ cita.7 }}</td>
+            <td>{{ cita.8 }} {{ cita.9 }} {{ cita.10 }}</td>
+            <td>
+                <a type="button" class="btn btn-info" href="/cita/editar/{{ cita.0 }}">Editar</a>
+                <a type="button" class="btn btn-danger" href="/cita/eliminar/{{ cita.0 }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a type="button" class="btn btn-primary" href="/calendario">
+    Crear cita
+</a>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'layout.html' %}
+{% block title %}Dentistas{% endblock %}
+{% block subtitle %}Dentistas{% endblock %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Nombre Completo</th>
+            <th scope="col">Fecha de Nacimiento</th>
+            <th scope="col">Sexo</th>
+            <th scope="col">Telefono</th>
+            <th scope="col">Email</th>
+            <th scope="col">Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for dentista in dentistas %}
+        <tr>
+            <td>{{ dentista.1 }} {{ dentista.2 }} {{ dentista.3 }}</td>
+            <td>{{ dentista.4 }}</td>
+            <td>{{ dentista.5 }}</td>
+            <td>{{ dentista.6 }}</td>
+            <td>{{ dentista.7 }}</td>
+            <td>
+                <a type="button" class="btn btn-info" href="/dentistas/editar/{{ dentista.0 }}">Editar</a>
+                <a type="button" class="btn btn-danger" href="/dentistas/eliminar/{{ dentista.0 }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Registrar dentistas
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body">
+                    <form method="POST">
+                        <div class="form-group">
+                            <label for="inputNombre">Nombre</label>
+                            <input type="text" name="nombre" class="form-control" id="inputNombre" placeholder="Nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPaterno">Apellido Paterno</label>
+                            <input type="text" name="paterno" class="form-control" id="inputPaterno"
+                                placeholder="Apellido Paterno">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputMaterno">Apellido Materno</label>
+                            <input type="text" name="materno" class="form-control" id="inputMaterno"
+                                placeholder="Apellido Materno">
+                        </div>
+                        <div class="form-group">
+                            <label for="inputNacimiento">Fecha de Nacimiento</label>
+                            <input type="date" name="nacimiento" class="form-control" id="inputNacimiento">
+                        </div>
+                        <div class="form-group">
+                            <label for="InputSexo">Sexo</label>
+                            <select class="form-select" aria-label="Default select example" name="sexo">
+                                <option value="idk" selected>no especificar</option>
+                                <option value="Mujer">Mujer</option>
+                                <option value="Hombre">Hombre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="InputTelefono">Telefono</label>
+                            <input type="tel" name="telefono" class="form-control" id="InputTelefono"
+                                placeholder="663-564-3553">
+                        </div>
+                        <div class="form-group">
+                            <label for="InputEmail">Email</label>
+                            <input type="email" name="email" class="form-control" id="InputEmail"
+                                aria-describedby="emailHelp" placeholder="email@dominio.com">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

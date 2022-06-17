@@ -1,0 +1,14 @@
+.bg-light{
+    background-color: #007279 !important;
+}
+.nav-link{
+    color: #000;
+}
+.nav-link:hover{
+    color: #fff;
+    background: #666;
+    border-radius: 5px;
+}
+main{
+    height: 100vh;
+}
